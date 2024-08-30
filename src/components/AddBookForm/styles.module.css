@@ -1,0 +1,14 @@
+.form{
+    width: 400px;
+    height: 400px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 15px;
+    
+}
+
+
+.btnSubmit{
+    display: block;
+    margin: 0 auto;
+}
