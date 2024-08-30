@@ -44,7 +44,7 @@ const BookItem = ({ book, onDelete, handleEdit }) => {
 
       <ul className={css.control}>
         <li>
-          <button type="button" onClick={modalToggle}>
+          <button className={css.editBtn} type="button" onClick={modalToggle}>
             Edit Book
           </button>
         </li>
@@ -58,14 +58,20 @@ const BookItem = ({ book, onDelete, handleEdit }) => {
           </button>
         </li>
         <li>
-          <button type="button" onClick={handleChangeBorrow}>
+          <button
+            style={{
+              backgroundColor: book.isBorrowed ? "#1ed818c8" : "#10c5b6",
+            }}
+            type="button"
+            onClick={handleChangeBorrow}
+          >
             {book.isBorrowed ? "Mark as available" : "Mark as borrowed"}
           </button>
         </li>
       </ul>
       {isEditOpen && (
         <Portal handleClose={modalToggle}>
-          <EditBookForm book={book} onEdit={handleEdit} />
+          <EditBookForm book={book} onEdit={handleEdit} onClose={modalToggle} />
         </Portal>
       )}
     </li>

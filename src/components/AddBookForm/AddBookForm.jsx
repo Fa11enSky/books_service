@@ -4,7 +4,8 @@ import addBook from "../../services/addBook";
 import css from "./styles.module.css";
 import FormWrapper from "../FormWrapper/FormWrapper";
 import { Notify } from "notiflix";
-const AddBookForm = ({ handleAdd }) => {
+import SubmitBth from "../SubmitBtn/SubmitBth";
+const AddBookForm = ({ handleAdd, onClose }) => {
   const [bookData, setBookData] = useState({ isbn: "", author: "", title: "" });
 
   const handleChange = (ev) => {
@@ -20,12 +21,14 @@ const AddBookForm = ({ handleAdd }) => {
       isbn.trim().length < 2 ||
       author.trim().length < 2
     ) {
+      Notify.warning("Check the entered data ");
       return;
     }
     try {
       const newBook = await addBook(bookData);
       handleAdd(newBook);
       Notify.success(`${newBook.title} successfully added`);
+      onClose();
     } catch (error) {
       Notify.failure(error.message);
     }
@@ -33,9 +36,11 @@ const AddBookForm = ({ handleAdd }) => {
 
   return (
     <FormWrapper>
-      <form  onSubmit={handleSubmit}>
-        <p>Enter the data of the book you want to add</p>
-        <label htmlFor="isbn">isbn</label>
+      <form className={css.form} onSubmit={handleSubmit}>
+        <p className={css.formTitle}>
+          Enter the data of the book you want to add
+        </p>
+        <label htmlFor="isbn">ISBN</label>
         <FormInput
           id="isbn"
           handleChange={handleChange}
@@ -43,7 +48,7 @@ const AddBookForm = ({ handleAdd }) => {
           name="isbn"
           value={bookData.isbn}
         />
-  
+
         <label htmlFor="title">Title</label>
         <FormInput
           id="title"
@@ -52,7 +57,7 @@ const AddBookForm = ({ handleAdd }) => {
           name="title"
           value={bookData.title}
         />
-  
+
         <label htmlFor="author">Author</label>
         <FormInput
           id="author"
@@ -61,10 +66,8 @@ const AddBookForm = ({ handleAdd }) => {
           name="author"
           value={bookData.author}
         />
-  
-        <button className={css.btnSubmit} type="submit">
-          Add a book
-        </button>
+
+        <SubmitBth text="Add Book" />
       </form>
     </FormWrapper>
   );

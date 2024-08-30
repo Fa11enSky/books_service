@@ -53,7 +53,7 @@ function App() {
     const nextParams = query !== "" ? { query } : {};
     setSearchParams(nextParams);
   };
-  
+
   const modalToggle = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -98,7 +98,7 @@ function App() {
       )}
       {isModalOpen && (
         <Portal handleClose={modalToggle}>
-          <AddBookForm handleAdd={handleAdd} />
+          <AddBookForm handleAdd={handleAdd} onClose={modalToggle} />
         </Portal>
       )}
     </div>

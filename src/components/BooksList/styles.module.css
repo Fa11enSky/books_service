@@ -1,7 +1,13 @@
-.list{
-display: flex;
-gap: 15px;
-list-style-type: none;
-flex-wrap: wrap;
-
+.list {
+  display: flex;
+  gap: 15px;
+  list-style-type: none;
+  flex-wrap: wrap;
+  margin: 0 auto;
 }
+@media screen and (max-width: 1000px){
+    .list{
+        justify-content: center;
+
+    }
+} 
