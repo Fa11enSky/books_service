@@ -1,0 +1,24 @@
+.item {
+  position: relative;
+  border: 1px solid black;
+  width: 500px;
+  padding: 15px;
+}
+.isbn{
+  font-weight: 500;
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.control{
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 5px;
+}
