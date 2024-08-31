@@ -15,30 +15,32 @@ import searchBooks from "./services/searchBooks";
 function App() {
   const [books, setBooks] = useState([]);
   const [toRender, setToRender] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const query = searchParams.get("query") ?? "";
   const trottledQuery = useThrottle(query, 1000);
 
-  
   useEffect(() => {
     (async function () {
       try {
+        setIsLoading(true);
         const data = await getAllBooks();
         setBooks(data);
+        setIsLoading(false);
       } catch (error) {
         Notify.failure(error.message);
       }
     })();
   }, []);
-  
+
   useEffect(() => {
     if (trottledQuery.trim() === "") {
       setToRender(books);
       return;
     }
-    
+
     (async function () {
       try {
         const response = await searchBooks(trottledQuery.trim());
@@ -48,7 +50,7 @@ function App() {
       }
     })();
   }, [trottledQuery, books]);
-  
+
   const updateQueryString = (query) => {
     const nextParams = query !== "" ? { query } : {};
     setSearchParams(nextParams);
@@ -57,11 +59,11 @@ function App() {
   const modalToggle = () => {
     setIsModalOpen(!isModalOpen);
   };
-  
+
   const handleAdd = (newBook) => {
     setBooks((prev) => [...prev, newBook]);
   };
-  
+
   const handleEdit = (isbn, updates) => {
     const idx = books.findIndex((el) => el.isbn === isbn);
     setBooks((prev) => {
@@ -93,6 +95,8 @@ function App() {
           onDelete={handleDelete}
           handleEdit={handleEdit}
         />
+      ) : isLoading ? (
+        <div>Loading...</div>
       ) : (
         <div>Nothing found, try changing your request</div>
       )}
