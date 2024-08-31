@@ -9,6 +9,9 @@ const editBook = async (isbn, updates) => {
     },
   });
   if (response.status !== 200) {
+    if (response.status === 409) {
+      throw new Error(`A book with ${updates.isbn} ISBN already exists`);
+    }
     throw new Error(response.statusText);
   }
   return response.json();

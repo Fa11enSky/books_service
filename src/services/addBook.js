@@ -9,6 +9,9 @@ const addBook = async (data) => {
     },
   });
   if (response.status !== 201) {
+    if (response.status === 409) {
+      throw new Error(`A book with ${data.isbn} ISBN already exists`);
+    }
     throw new Error(response.statusText);
   }
   const obj = await response.json();
