@@ -87,23 +87,27 @@ function App() {
 
   return (
     <div className="container">
-      <SearchInput value={query} handleChange={updateQueryString} />
-      {query === "" && <AddBookBtn onClick={modalToggle} />}
-      {toRender.length > 0 ? (
-        <BooksList
-          books={toRender}
-          onDelete={handleDelete}
-          handleEdit={handleEdit}
-        />
-      ) : isLoading ? (
+      {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div>Nothing found, try changing your request</div>
-      )}
-      {isModalOpen && (
-        <Portal handleClose={modalToggle}>
-          <AddBookForm handleAdd={handleAdd} onClose={modalToggle} />
-        </Portal>
+        <>
+          <SearchInput value={query} handleChange={updateQueryString} />
+          {query === "" && <AddBookBtn onClick={modalToggle} />}
+          {toRender.length > 0 ? (
+            <BooksList
+              books={toRender}
+              onDelete={handleDelete}
+              handleEdit={handleEdit}
+            />
+          ) : (
+            <div>Nothing found, try changing your request</div>
+          )}
+          {isModalOpen && (
+            <Portal handleClose={modalToggle}>
+              <AddBookForm handleAdd={handleAdd} onClose={modalToggle} />
+            </Portal>
+          )}
+        </>
       )}
     </div>
   );
